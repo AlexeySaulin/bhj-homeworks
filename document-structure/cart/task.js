@@ -2,8 +2,8 @@ const container = document.querySelector('.cart__products');
 const quantityButton = document.querySelectorAll('.product__quantity-control');
 const addButton = document.querySelectorAll('.product__add');
 
-for (let button of quantityButton) {
-    button.addEventListener('click', (event) => {
+quantityButton.forEach(item => {
+    item.addEventListener('click', (event) => {
         let value = event.target.parentNode.querySelector('.product__quantity-value');
         let count = +value.innerText;
         if (event.target.classList.contains('product__quantity-control_inc')) {
@@ -18,26 +18,32 @@ for (let button of quantityButton) {
             }
         }
     });
-}
+});
 
-for (let button of addButton) {
-    button.addEventListener('click', (event) => {
-        const product = event.target.closest('.product');
+addButton.forEach(item => {
+    item.addEventListener('click', () => {
+
+        const product = item.closest('.product');
         const id = product.dataset.id;
-        const countFromProduct = +event.target.parentNode.querySelector('.product__quantity-value').innerText;
-        for (let item of container.children) {
-            if (item.dataset.id === id) {
-                let productCount = item.querySelector('.cart__product-count');
-                let total = +productCount.innerText;
-                productCount.innerText = total + countFromProduct;
-                return;
-            }
+        const productImg = product.querySelector('img').src;
+        const countFromProduct = product.querySelector('.product__quantity-value');
+        
+        const cartProducts = Array.from(container.getElementsByClassName('cart__product'));
+
+        const productInCart = cartProducts.find(item => item.dataset.id === id);
+
+        if (productInCart) {
+            const productInCartCount = container.querySelector('.cart__product-count');
+            productInCartCount.textContent = countFromProduct.textContent;   
+        } else {
+            container.insertAdjacentHTML('beforeEnd', `<div class="cart__product" data-id="${id}">
+            <img class="cart__product-image" src="${productImg}">
+            <div class="cart__product-count">${countFromProduct.textContent}</div>
+            </div>`); 
         }
-        const productImg = product.querySelector('.product__image').src;
-        const count = product.querySelector('.product__quantity-value').innerText;
-        container.insertAdjacentHTML('beforeEnd', `<div class="cart__product" data-id="${id}">
-        <img class="cart__product-image" src="${productImg}">
-        <div class="cart__product-count">${count}</div>
-        </div>`);
     });
-}
+});
+
+
+
+
