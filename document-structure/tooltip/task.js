@@ -17,9 +17,11 @@ tooltip.forEach(element => element.addEventListener('click', (event) => {
     if (!tooltipContainer) {
         createTitle();
     } else {
-        if (tooltipContainer.innerText != target.title) {
+        if (tooltipContainer.innerHTML != element.title &&
+            element.nextElementSibling.style.left != tooltipContainer.style.left ) {
             createTitle();
         }
-        tooltipContainer.remove();
+     tooltipContainer.remove();
     }  
 }));
+
