@@ -33,7 +33,7 @@ addButton.forEach(item => {
         const productInCart = cartProducts.find(item => item.dataset.id === id);
 
         if (productInCart) {
-            const productInCartCount = container.querySelector('.cart__product-count');
+            const productInCartCount = productInCart.querySelector('.cart__product-count');
             productInCartCount.textContent = +countFromProduct.textContent + +productInCartCount.textContent;   
         } else {
             container.insertAdjacentHTML('beforeEnd', `<div class="cart__product" data-id="${id}">
