@@ -5,7 +5,7 @@ tooltip.forEach(element => element.addEventListener('click', (event) => {
     
     const tooltipContainer = document.querySelector('.tooltip');
 
-    function createTitle() {
+   function createTitle() {
         target = event.target;
         const position = {left, bottom} = target.getBoundingClientRect();
         target.insertAdjacentHTML("afterEnd", 
@@ -17,8 +17,7 @@ tooltip.forEach(element => element.addEventListener('click', (event) => {
     if (!tooltipContainer) {
         createTitle();
     } else {
-        if (tooltipContainer.innerHTML != element.title &&
-            element.nextElementSibling.style.left != tooltipContainer.style.left ) {
+        if (tooltipContainer.innerText != element.title) {
             createTitle();
         }
      tooltipContainer.remove();
